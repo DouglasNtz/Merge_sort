@@ -1,0 +1,5 @@
+Function: my_merge_sort
+Número de experimentos: 100
+Tamanho da lista de números: 5000
+Tempo total: 45.691312ms
+
