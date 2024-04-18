@@ -1,10 +1,6 @@
-#[cfg(test)]
-mod tests;
+use std::fmt::Debug;
 
-mod algorithms;
-
-mod proof_algorithms;
-pub fn my_merge_sort<T: PartialOrd + Copy>(v: &mut Vec<T>) {
+pub(super) fn my_merge_sort_proof_stability<T: PartialOrd + Copy>(v: &mut Vec<(T, usize)>) {
 
     let mut v0 = Vec::with_capacity(v.len());
 
@@ -14,10 +10,9 @@ pub fn my_merge_sort<T: PartialOrd + Copy>(v: &mut Vec<T>) {
         v0 = merge_sorted_vectors(sort_vector(&v[..(v.len()/2)]), sort_vector(&v[(v.len()/2)..]));
     }
     *v = v0;
-
 }
 
-fn sort_vector<T: PartialOrd + Copy>(slice: &[T]) -> Vec<T> {
+fn sort_vector<T: PartialOrd + Copy>(slice: &[(T, usize)]) -> Vec<(T, usize)> {
 
     let mut v0 = Vec::with_capacity(slice.len());
 
@@ -28,7 +23,7 @@ fn sort_vector<T: PartialOrd + Copy>(slice: &[T]) -> Vec<T> {
     }
     v0
 }
-fn merge_sorted_vectors<T: PartialOrd + Copy>(v_left: Vec<T>, v_rigth: Vec<T>) -> Vec<T> {
+fn merge_sorted_vectors<T: PartialOrd + Copy>(v_left: Vec<(T, usize)>, v_rigth: Vec<(T, usize)>) -> Vec<(T, usize)> {
 
     let mut v0 = Vec::with_capacity(v_left.len() + v_rigth.len());
 
@@ -36,7 +31,7 @@ fn merge_sorted_vectors<T: PartialOrd + Copy>(v_left: Vec<T>, v_rigth: Vec<T>) -
     let mut pos_rigth = 0;
 
     loop {
-        if pos_left < v_left.len() && (pos_rigth == v_rigth.len() || v_left[pos_left] <= v_rigth[pos_rigth]) {
+        if pos_left < v_left.len() && (pos_rigth == v_rigth.len() || v_left[pos_left].0 <= v_rigth[pos_rigth].0) {
             v0.push(v_left[pos_left]);
             pos_left += 1;
         } else if pos_rigth < v_rigth.len() {
@@ -49,4 +44,3 @@ fn merge_sorted_vectors<T: PartialOrd + Copy>(v_left: Vec<T>, v_rigth: Vec<T>) -
 
     v0
 }
-

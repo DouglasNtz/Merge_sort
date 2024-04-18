@@ -1,9 +1,3 @@
-#[cfg(test)]
-mod tests;
-
-mod algorithms;
-
-mod proof_algorithms;
 pub fn my_merge_sort<T: PartialOrd + Copy>(v: &mut Vec<T>) {
 
     let mut v0 = Vec::with_capacity(v.len());
@@ -11,7 +5,7 @@ pub fn my_merge_sort<T: PartialOrd + Copy>(v: &mut Vec<T>) {
     if v.len() == 1 {
         v0.push(v[0]);
     } else {
-        v0 = merge_sorted_vectors(sort_vector(&v[..(v.len()/2)]), sort_vector(&v[(v.len()/2)..]));
+        v0 = crate::merge_sorted_vectors(crate::sort_vector(&v[..(v.len()/2)]), crate::sort_vector(&v[(v.len()/2)..]));
     }
     *v = v0;
 
@@ -24,7 +18,7 @@ fn sort_vector<T: PartialOrd + Copy>(slice: &[T]) -> Vec<T> {
     if slice.len() == 1 {
         v0.push(slice[0]);
     } else {
-        v0 = merge_sorted_vectors(sort_vector(&slice[..(slice.len()/2)]), sort_vector(&slice[(slice.len()/2)..]));
+        v0 = crate::merge_sorted_vectors(crate::sort_vector(&slice[..(slice.len()/2)]), crate::sort_vector(&slice[(slice.len()/2)..]));
     }
     v0
 }
@@ -49,4 +43,3 @@ fn merge_sorted_vectors<T: PartialOrd + Copy>(v_left: Vec<T>, v_rigth: Vec<T>) -
 
     v0
 }
-
