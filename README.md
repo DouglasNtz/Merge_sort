@@ -12,9 +12,10 @@ cargo run numero_experimentos tamanho_vetor metodo_de_ordenacao tipo_output >> n
 
 - tamanho_vetor é um número inteiro que representa a quantidade números aleatórios que serão gerados e armazenados no vetor, o qual faremos sua ordenação in-place. Deve ser possível fazer parse para usize.
 
-Em metodo_de_ordenacao devemos digitar um dentre os quatro metodos disponíveis:
+Em metodo_de_ordenacao devemos digitar um dentre os metodos disponíveis:
 
 - my_merge_sort: implementação clássica do merge sort.
+- my_merge_sort_optmized: implementação melhorada do anterior. Performance um pouco superior, mas clareza e simplicidade muito superior.
   
 Em tipo_output devemos digitar uma das seguintes opções:
 
@@ -24,7 +25,7 @@ Em tipo_output devemos digitar uma das seguintes opções:
 
 Exemplos:
 
-cargo run --release 100 5000 my_merge_sort Times >> resultados.txt
+cargo run --release 100 5000 my_merge_sort_optmized Times >> resultados.txt
 
 Escreve o seguinte output no arquivo:
 
@@ -36,11 +37,11 @@ Número de experimentos: 100
 
 Tamanho da lista de números: 5000
 
-Tempo total: 47.191591ms
+Tempo total: 42.500324ms
 
 //--------------------------
 
-cargo run --release 100 5000 my_merge_sort Iterations >> resultados.txt
+cargo run --release 100 5000 my_merge_sort_optmized Iterations >> resultados.txt
 
 Escreve o seguinte output no arquivo:
 
@@ -52,5 +53,5 @@ Número de experimentos: 100
 
 Tamanho da lista de números: 5000
 
-Iterações por execução: 65223.26
+Iterações por execução: 65222.58
 

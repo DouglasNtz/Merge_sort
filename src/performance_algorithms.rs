@@ -68,3 +68,57 @@ fn merge_sorted_vectors<T: PartialOrd + Copy>(v_left: Vec<T>, v_rigth: Vec<T>, c
 
     v0
 }
+
+//--------------------------
+
+pub fn my_merge_sort_optmized_it<T: PartialOrd + Copy>(v: &mut Vec<T>) -> usize {
+
+    let mut count_executions = 0;
+
+    if v.len() > 1 {
+        merge(v, &mut count_executions);
+    }
+
+    count_executions
+}
+
+fn merge<T: PartialOrd + Copy>(v: &mut Vec<T>, count: &mut usize) {
+
+    if v.len() == 1 {
+        *count += 1;
+        return;
+    }
+
+    let mut v_left = v[..(v.len() / 2)].to_vec();
+    let mut v_rigth = v[(v.len() / 2)..].to_vec();
+
+    merge(&mut v_left, count);
+    merge(&mut v_rigth, count);
+
+    let mut pos_left = 0;
+    let mut pos_rigth = 0;
+
+    v.clear();
+
+    loop {
+        if pos_left < v_left.len() && pos_rigth < v_rigth.len() {
+            if v_left[pos_left] <= v_rigth[pos_rigth] {
+                v.push(v_left[pos_left]);
+                pos_left += 1;
+                *count += 1;
+            } else {
+                v.push(v_rigth[pos_rigth]);
+                pos_rigth += 1;
+                *count += 1;
+            }
+        } else if pos_left == v_left.len() {
+            v.extend_from_slice(&v_rigth[pos_rigth..]);
+            *count += 1;
+            break;
+        } else {
+            v.extend_from_slice(&v_left[pos_left..]);
+            *count += 1;
+            break;
+        }
+    }
+}
