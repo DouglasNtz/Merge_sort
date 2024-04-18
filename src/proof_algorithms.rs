@@ -31,13 +31,19 @@ fn merge_sorted_vectors<T: PartialOrd + Copy>(v_left: Vec<(T, usize)>, v_rigth: 
     let mut pos_rigth = 0;
 
     loop {
-        if pos_left < v_left.len() && (pos_rigth == v_rigth.len() || v_left[pos_left].0 <= v_rigth[pos_rigth].0) {
-            v0.push(v_left[pos_left]);
-            pos_left += 1;
-        } else if pos_rigth < v_rigth.len() {
-            v0.push(v_rigth[pos_rigth]);
-            pos_rigth += 1;
+        if pos_left < v_left.len() && pos_rigth < v_rigth.len() {
+            if v_left[pos_left].0 <= v_rigth[pos_rigth].0 {
+                v0.push(v_left[pos_left]);
+                pos_left += 1;
+            } else {
+                v0.push(v_rigth[pos_rigth]);
+                pos_rigth += 1;
+            }
+        } else if pos_left == v_left.len() {
+            v0.extend_from_slice(&v_rigth[pos_rigth..]);
+            break;
         } else {
+            v0.extend_from_slice(&v_left[pos_left..]);
             break;
         }
     }
