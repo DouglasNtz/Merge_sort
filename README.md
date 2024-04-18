@@ -15,6 +15,7 @@ cargo run numero_experimentos tamanho_vetor metodo_de_ordenacao tipo_output >> n
 Em metodo_de_ordenacao devemos digitar um dentre os metodos disponíveis:
 
 - my_merge_sort: implementação clássica do merge sort.
+
 - my_merge_sort_optmized: implementação melhorada do anterior. Performance um pouco superior, mas clareza e simplicidade muito superior.
   
 Em tipo_output devemos digitar uma das seguintes opções:
