@@ -46,10 +46,11 @@ Escreve o seguinte output no arquivo:
 
 //--------------------------
 
-Function: my_insertion_sort
+Function: my_merge_sort
 
 Número de experimentos: 100
 
 Tamanho da lista de números: 5000
 
-Iterações por execução: 66808.0
+Iterações por execução: 65223.26
+
