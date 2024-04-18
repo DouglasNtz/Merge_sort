@@ -1,7 +1,12 @@
-use std::io::Take;
 use rand;
 use std::time::{Duration, Instant};
-use Merge_sort::my_merge_sort;
+use lib::{my_merge_sort};
+use lib::{my_merge_sort_it};
+
+enum My_merge_sort<T> {
+    Times(for<'a> fn(&'a mut Vec<T>)),
+    Iterations(for<'a> fn(&'a mut Vec<T>) -> usize)
+}
 
 fn main() {
 
@@ -11,10 +16,34 @@ fn main() {
 
     let tamanho_lista = args[2].parse::<usize>().unwrap();
 
+    let func_name = args[3].as_str();
+
+    let kind_algorithm = args[4].as_str();
+
+    let algorithms;
+
+    match kind_algorithm {
+        "Times" => {
+            algorithms = (My_merge_sort::Times(my_merge_sort),)
+        },
+        "Iterations" => {
+            algorithms = (My_merge_sort::Iterations(my_merge_sort_it),)
+        },
+        _ => {
+            println!("Tipo de algoritmo não existe.");
+            return;
+        }
+
+    }
+
     let mut times = Vec::with_capacity(numero_experimentos);
 
     let mut start_time;
     let mut duration;
+
+    let mut vec_iterations = Vec::with_capacity(numero_experimentos);
+
+    let mut iterations: usize;
 
     for _exp in 0..numero_experimentos {
 
@@ -23,20 +52,44 @@ fn main() {
             v.push(rand::random::<i32>());
         }
 
-        start_time = Instant::now();
-        my_merge_sort(&mut v);
-        duration = start_time.elapsed();
+        match func_name {
+            "my_merge_sort" => {
+                start_time = Instant::now();
+                iterations = match algorithms.0 {
+                    My_merge_sort::Times(func) => {
+                        func(&mut v);
+                        0
+                    },
+                    My_merge_sort::Iterations(func) => {
+                        func(&mut v)
+                    }
+                };
+                duration = start_time.elapsed();
+            },
+            _ => {
+                println!("Nome da função não existe.");
+                return;
+            }
+        };
 
         times.push(duration);
+        vec_iterations.push(iterations);
 
     }
 
-
-    println!(r###"Function: my_merge_sort
+    if kind_algorithm == "Times" {
+        println!(r###"Function: {func_name}
 Número de experimentos: {numero_experimentos}
 Tamanho da lista de números: {tamanho_lista}
 Tempo total: {:?}
 "###, times.iter().sum::<Duration>());
+    } else if kind_algorithm == "Iterations" {
+        println!(r###"Function: {func_name}
+Número de experimentos: {numero_experimentos}
+Tamanho da lista de números: {tamanho_lista}
+Itarações por execução: {:?}
+"###, (vec_iterations.iter().sum::<usize>() as f64) / (numero_experimentos as f64));
+    }
 
 }
 
