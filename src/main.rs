@@ -109,11 +109,6 @@ Itarações por execução: {:?}
 "###, (vec_iterations.iter().sum::<usize>() as f64) / (numero_experimentos as f64));
     }
 
-    let mut v = vec![5,6,2];
-    let r = &mut v;
-    let s = r[..r.len()].to_vec();
-    r;
-
 }
 
 
