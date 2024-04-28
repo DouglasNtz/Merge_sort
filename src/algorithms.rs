@@ -79,10 +79,10 @@ pub fn my_merge_sort_optmized<T: PartialOrd + Copy>(v: &mut Vec<T>) {
                 pos_rigth += 1;
             }
         } else if pos_left == v_left.len() {
-            v.extend(&v_rigth[pos_rigth..]);
+            v.extend_from_slice(&v_rigth[pos_rigth..]);
             break;
         } else {
-            v.extend(&v_left[pos_left..]);
+            v.extend_from_slice(&v_left[pos_left..]);
             break;
         }
     }
