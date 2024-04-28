@@ -58,20 +58,12 @@ pub(super) fn my_merge_sort_optmized_proof_stability<T: PartialOrd + Copy>(v: &m
     if v.len() == 1 {
         return;
     }
-    merge(v);
-}
-
-fn merge<T: PartialOrd + Copy>(v: &mut Vec<(T, usize)>) {
-
-    if v.len() == 1 {
-        return;
-    }
 
     let mut v_left = v[..(v.len() / 2)].to_vec();
     let mut v_rigth = v[(v.len() / 2)..].to_vec();
 
-    merge(&mut v_left);
-    merge(&mut v_rigth);
+    my_merge_sort_optmized_proof_stability(&mut v_left);
+    my_merge_sort_optmized_proof_stability(&mut v_rigth);
 
     let mut pos_left = 0;
     let mut pos_rigth = 0;
