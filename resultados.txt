@@ -1,7 +1,7 @@
 Function: my_merge_sort_optmized
 Número de experimentos: 100
 Tamanho da lista de números: 5000
-Tempo total: 41.375542ms
+Tempo total: 40.621156ms
 
 Function: my_merge_sort_optmized
 Número de experimentos: 100
